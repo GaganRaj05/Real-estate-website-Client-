@@ -9,11 +9,9 @@ const Properties = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    // Simulate API call
     const fetchProperties = async () => {
       try {
         await new Promise(resolve => setTimeout(resolve, 1000));
-        // Mock data
         const mockProperties = [
           {
             id: 1,
@@ -47,6 +45,39 @@ const Properties = () => {
             bathrooms: 3.5,
             sqft: 3200,
             image: 'https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+          },
+          {
+            id: 4,
+            title: 'Charming Cottage',
+            description: 'Quaint cottage with modern amenities',
+            address: '101 Forest Lane, Woodville',
+            price: 275000,
+            bedrooms: 2,
+            bathrooms: 1,
+            sqft: 950,
+            image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+          },
+          {
+            id: 5,
+            title: 'Urban Loft',
+            description: 'Spacious loft in the arts district',
+            address: '202 Gallery Ave, Metropolis',
+            price: 625000,
+            bedrooms: 1,
+            bathrooms: 1,
+            sqft: 1500,
+            image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+          },
+          {
+            id: 6,
+            title: 'Suburban Townhouse',
+            description: 'Low-maintenance townhouse with community pool',
+            address: '303 Park Circle, Suburbia',
+            price: 325000,
+            bedrooms: 3,
+            bathrooms: 2.5,
+            sqft: 1650,
+            image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
           }
         ];
         setProperties(mockProperties);
@@ -61,18 +92,25 @@ const Properties = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center py-12">Loading properties...</div>;
+    return (
+      <div className="min-h-screen bg-gray-100 py-12 flex justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading properties...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Available Properties</h1>
+    <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-0">Available Properties</h1>
           {user && (
             <Link 
               to="/add-property"
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
             >
               Add Property
             </Link>
@@ -84,7 +122,7 @@ const Properties = () => {
             <p className="text-gray-600">No properties found.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {properties.map(property => (
               <PropertyCard key={property.id} property={property} />
             ))}
